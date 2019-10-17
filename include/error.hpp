@@ -6,19 +6,17 @@
 
 #include <string>
 
-class Error {
-public:
-    static Error& instance() {
-        static Error instance;
-        return instance;
-    }
+enum class ErrorCode {
+    Success = 0,
+    CreateSocket = 1,
+    BindSocket = 2,
+    SetNonBlocking = 3,
+    InvalidSocket = 4,
+    InvalidHost = 5,
+    SendData = 6
+};
 
-    std::string GetMessage() { return message_; };
-    void SetMessage(const std::string& message) { message_ = message; };
-
-private:
-    Error() = default;
-    ~Error() = default;
-
-    std::string message_;
+struct Error {
+    ErrorCode code;
+    std::string message;
 };
