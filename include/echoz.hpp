@@ -2,9 +2,7 @@
 // Created by jwW on 2019-10-15.
 //
 
-#ifndef ZED_NET_ECHOZ_HPP
-#define ZED_NET_ECHOZ_HPP
-
+#pragma once
 
 class Echoz {
 public:
@@ -18,6 +16,3 @@ public:
     // Returns NULL on failure (call 'Error::instance().GetMessage' for more info)
     static const char *HostToStr(unsigned int host);
 };
-
-
-#endif //ZED_NET_ECHOZ_HPP

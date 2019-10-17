@@ -2,9 +2,7 @@
 // Created by jwW on 2019-10-15.
 //
 
-#ifndef ZED_NET_ERROR_HPP
-#define ZED_NET_ERROR_HPP
-
+#pragma once
 
 #include <string>
 
@@ -24,6 +22,3 @@ private:
 
     std::string message_;
 };
-
-
-#endif //ZED_NET_ERROR_HPP

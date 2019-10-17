@@ -2,11 +2,9 @@
 // Created by jwW on 2019-10-15.
 //
 
-#ifndef ZED_NET_UDP_SOCKET_HPP
-#define ZED_NET_UDP_SOCKET_HPP
+#pragma once
 
 #include "internet_address.hpp"
-
 
 class UDPSocket {
 public:
@@ -35,6 +33,3 @@ public:
 private:
     int sockfd_ = 0;
 };
-
-
-#endif //ZED_NET_UDP_SOCKET_HPP

@@ -2,9 +2,7 @@
 // Created by jwW on 2019-10-15.
 //
 
-#ifndef ZED_NET_INTERNET_ADDRESS_HPP
-#define ZED_NET_INTERNET_ADDRESS_HPP
-
+#pragma once
 
 class InternetAddress {
 public:
@@ -23,6 +21,3 @@ private:
     unsigned int host_ = 0;
     unsigned short port_ = 0;
 };
-
-
-#endif //ZED_NET_INTERNET_ADDRESS_HPP
