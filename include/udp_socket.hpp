@@ -16,19 +16,21 @@ public:
 
     // Opens a UDP socket and binds it to a specified port
     // (use 0 to select a random open port)
-    // Socket will not block if 'non-blocking' is non-zero
-    void Open(unsigned int port, int non_blocking);
+    // Socket will not block if 'is_non_blocking' is true
+    Error Open(unsigned int port, bool is_non_blocking);
 
     // Closes a previously opened socket
-    void Close();
+    Error Close();
 
     // Sends a specific amount of data to 'destination'
-    // Returns 0 on success, -1 otherwise (call 'Error::instance().GetMessage' for more info)
-    int Send(InternetAddress destination, const void *data, int size);
+    Error Send(InternetAddress destination, const void *data, int size);
 
     // Receives a specific amount of data from 'sender'
-    // Returns the number of bytes received, -1 otherwise (call 'Error::instance().GetMessage' for more info)
+    // Returns the number of bytes received, -1 otherwise
     int Receive(InternetAddress *sender, void *data, int size);
+
+    // Check socket is available or not
+    Error Check();
 
 private:
     int sockfd_ = 0;
