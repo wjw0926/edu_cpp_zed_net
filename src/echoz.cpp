@@ -26,7 +26,7 @@ int Echoz::RunServer(unsigned short port) {
         int bytes_read = udp_socket->Receive(&address, &buffer, sizeof(buffer));
         if (bytes_read) {
             std::cout << "Received " << bytes_read << " bytes from "
-                      << Echoz::HostToStr(address.GetHost()) << ":"
+                      << HostToStr(address.GetHost()) << ":"
                       << address.GetPort() << ": "
                       << buffer << std::endl;
 
@@ -73,7 +73,7 @@ int Echoz::RunClient(const char *host, unsigned short port) {
         int bytes_read = udp_socket->Receive(&sender, &buffer, sizeof(buffer));
         if (bytes_read) {
             std::cout << "Received " << bytes_read << " bytes from "
-                      << Echoz::HostToStr(sender.GetHost()) << ":"
+                      << HostToStr(sender.GetHost()) << ":"
                       << sender.GetPort() << ": "
                       << buffer << std::endl;
         }

@@ -14,7 +14,6 @@ void UDPSocket::Open(unsigned int port, int non_blocking) {
     // Create the socket
     SetSockfd(socket(AF_INET, SOCK_DGRAM, IPPROTO_UDP));
     if (GetSockfd() <= 0) {
-        UDPSocket::Close();
         Error::instance().SetMessage("Failed to create socket");
     }
 
@@ -25,14 +24,14 @@ void UDPSocket::Open(unsigned int port, int non_blocking) {
     address.sin_port = htons(port);
 
     if (bind(GetSockfd(), (const struct sockaddr *) &address, sizeof(struct sockaddr_in)) != 0) {
-        UDPSocket::Close();
+        Close();
         Error::instance().SetMessage("Failed to bind socket");
     }
 
     // Set the socket to non-blocking if necessary
     if (non_blocking) {
         if (fcntl(GetSockfd(), F_SETFL, O_NONBLOCK, non_blocking) != 0) {
-            UDPSocket::Close();
+            Close();
             Error::instance().SetMessage("Failed to set socket to non-blocking");
         }
     }

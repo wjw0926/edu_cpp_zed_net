@@ -12,5 +12,4 @@ add_executable(edu_cpp_zed_net
         main.cpp
         src/echoz.cpp
         src/udp_socket.cpp
-        src/internet_address.cpp
         )
