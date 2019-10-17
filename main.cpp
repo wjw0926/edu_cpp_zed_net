@@ -1,6 +1,6 @@
 #include <string>
 #include <iostream>
-#include "echoz.hpp"
+#include "cppzednet/include/echoz.hpp"
 
 int main(int argc, char* argv[]) {
     std::string option = argv[1];

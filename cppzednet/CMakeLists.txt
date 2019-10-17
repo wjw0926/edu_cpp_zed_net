@@ -4,14 +4,11 @@ project(edu_cpp_zed_net)
 
 set(CMAKE_CXX_STANDARD 17)
 
-add_subdirectory(cppzednet)
+include_directories(include)
 
 add_compile_options(-Wall -Wextra -Wshadow -Wnon-virtual-dtor -pedantic)
 
-add_executable(edu_cpp_zed_net
-        main.cpp
-        )
-
-target_link_libraries(edu_cpp_zed_net
-        cppzednet
+add_library(cppzednet STATIC
+        src/echoz.cpp
+        src/udp_socket.cpp
         )

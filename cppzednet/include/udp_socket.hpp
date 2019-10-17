@@ -23,11 +23,11 @@ public:
     Error Close();
 
     // Sends a specific amount of data to 'destination'
-    Error Send(InternetAddress destination, const void *data, int size);
+    Error Send(InternetAddress destination, const char *data, int size);
 
     // Receives a specific amount of data from 'sender'
     // Returns the number of bytes received, -1 otherwise
-    int Receive(InternetAddress *sender, void *data, int size);
+    int Receive(InternetAddress *sender, char *data, int size);
 
     // Check socket is available or not
     Error Check();

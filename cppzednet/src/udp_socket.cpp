@@ -47,13 +47,13 @@ Error UDPSocket::Close() {
     }
 }
 
-Error UDPSocket::Send(InternetAddress destination, const void *data, int size) {
+Error UDPSocket::Send(InternetAddress destination, const char *data, int size) {
     struct sockaddr_in address{};
     address.sin_family = AF_INET;
     address.sin_addr.s_addr = destination.GetHost();
     address.sin_port = htons(destination.GetPort());
 
-    int sent_bytes = sendto(GetSockfd(), (const char *) data, size, 0, (const struct sockaddr *) &address, sizeof(struct sockaddr_in));
+    int sent_bytes = sendto(GetSockfd(), data, size, 0, (const struct sockaddr *) &address, sizeof(struct sockaddr_in));
     if (sent_bytes != size) {
         return Error{ErrorCode::SendData, "Failed to send data"};
     }
@@ -61,11 +61,11 @@ Error UDPSocket::Send(InternetAddress destination, const void *data, int size) {
     return Error{ErrorCode::Success, "Success"};
 }
 
-int UDPSocket::Receive(InternetAddress *sender, void *data, int size) {
+int UDPSocket::Receive(InternetAddress *sender, char *data, int size) {
     struct sockaddr_in from{};
     socklen_t from_length = sizeof(from);
 
-    int received_bytes = recvfrom(GetSockfd(), (char *) data, size, 0, (struct sockaddr *) &from, &from_length);
+    int received_bytes = recvfrom(GetSockfd(), data, size, 0, (struct sockaddr *) &from, &from_length);
     if (received_bytes <= 0) {
         return 0;
     }
