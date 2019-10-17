@@ -10,14 +10,14 @@
 
 bool InternetAddress::SetHost(const char *host) {
     if (host == nullptr) {
-        this->SetHost(INADDR_ANY);
+        SetHost(INADDR_ANY);
         return true;
     } else {
-        this->SetHost(inet_addr(host));
-        if (this->GetHost() == INADDR_NONE) {
+        SetHost(inet_addr(host));
+        if (GetHost() == INADDR_NONE) {
             struct hostent *hostent = gethostbyname(host);
             if (hostent) {
-                this->SetHost(hostent->h_addr);
+                SetHost(hostent->h_addr);
                 return true;
             } else {
                 Error::instance().SetMessage("Invalid host name");

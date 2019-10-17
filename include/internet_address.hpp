@@ -9,11 +9,11 @@ public:
     InternetAddress() = default;
     ~InternetAddress() = default;
 
-    inline unsigned int GetHost() { return this->host_; };
-    inline unsigned short GetPort() { return this->port_; };
+    unsigned int GetHost() { return host_; };
+    unsigned short GetPort() { return port_; };
 
-    inline void SetHost(unsigned int host) { this->host_ = host; };
-    inline void SetPort(unsigned short port) { this->port_ = port; };
+    void SetHost(unsigned int host) { host_ = host; };
+    void SetPort(unsigned short port) { port_ = port; };
 
     bool SetHost(const char *host);
 

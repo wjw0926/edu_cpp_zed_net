@@ -11,8 +11,8 @@ public:
     UDPSocket() = default;
     ~UDPSocket() = default;
 
-    inline int GetSockfd() { return this->sockfd_; };
-    inline void SetSockfd(int sockfd) { this->sockfd_ = sockfd; };
+    int GetSockfd() { return sockfd_; };
+    void SetSockfd(int sockfd) { sockfd_ = sockfd; };
 
     // Opens a UDP socket and binds it to a specified port
     // (use 0 to select a random open port)

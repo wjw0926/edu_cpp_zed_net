@@ -13,8 +13,8 @@ public:
         return instance;
     }
 
-    inline std::string GetMessage() { return this->message_; };
-    inline void SetMessage(const std::string& message) { this->message_ = message; };
+    std::string GetMessage() { return message_; };
+    void SetMessage(const std::string& message) { message_ = message; };
 
 private:
     Error() = default;
