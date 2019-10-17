@@ -3,6 +3,11 @@
 #include "cppzednet/include/echoz.hpp"
 
 int main(int argc, char* argv[]) {
+    if (argc < 3 || argc > 4) {
+        std::cout << "Usage: edu_cpp_zed_net (-server <port> | -client <host> <port>)" << std::endl;
+        return 0;
+    }
+
     std::string option = argv[1];
 
     if (argc == 3 && option == "-server") {
@@ -10,8 +15,4 @@ int main(int argc, char* argv[]) {
     } else if (argc == 4 && option == "-client") {
         return Echoz::RunClient(argv[2], static_cast<unsigned short>(std::stoul(argv[3])));
     }
-
-    std::cout << "Usage: edu_cpp_zed_net [-server [port] or -client [host] [port]" << std::endl;
-
-    return 0;
 }
