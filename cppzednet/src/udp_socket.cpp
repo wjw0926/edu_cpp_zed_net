@@ -67,7 +67,7 @@ int UDPSocket::Receive(InternetAddress *sender, char *data, int size) {
 
     int received_bytes = recvfrom(GetSockfd(), data, size, 0, (struct sockaddr *) &from, &from_length);
     if (received_bytes <= 0) {
-        return 0;
+        return received_bytes;
     }
 
     sender->SetHost(from.sin_addr.s_addr);

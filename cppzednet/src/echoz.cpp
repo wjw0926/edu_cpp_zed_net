@@ -13,7 +13,11 @@
 
 int Echoz::RunServer(unsigned short port) {
     UDPSocket udp_socket;
-    udp_socket.Open(port, false);
+    Error open = udp_socket.Open(port, false);
+    if (open.code != ErrorCode::Success) {
+        std::cout << "Error: " << open.message << std::endl;
+        return -1;
+    }
 
     std::cout << "Running echo server on port " << port << std::endl;
 
@@ -28,7 +32,7 @@ int Echoz::RunServer(unsigned short port) {
 
         InternetAddress address{};
         int bytes_read = udp_socket.Receive(&address, reinterpret_cast<char *>(&buffer), sizeof(buffer));
-        if (bytes_read != 0) {
+        if (bytes_read > 0) {
             std::cout << "Received " << bytes_read << " bytes from "
                       << HostToStr(address.GetHost()) << ":"
                       << address.GetPort() << ": "
@@ -41,7 +45,15 @@ int Echoz::RunServer(unsigned short port) {
             }
 
             std::cout << "Echoing..." << std::endl;
-            udp_socket.Send(address, buffer, sizeof(buffer));
+            Error send = udp_socket.Send(address, buffer, sizeof(buffer));
+            if (send.code != ErrorCode::Success) {
+                std::cout << "Error: " << send.message << std::endl;
+                return -1;
+            }
+        } else if (bytes_read < 0) {
+            std::cout << "Error: failed to receive data from socket" << std::endl;
+        } else {
+            std::cout << "Nothing received" << std::endl;
         }
     }
 
@@ -53,7 +65,11 @@ int Echoz::RunServer(unsigned short port) {
 
 int Echoz::RunClient(const char *host, unsigned short port) {
     UDPSocket udp_socket;
-    udp_socket.Open(0, false);
+    Error open_check = udp_socket.Open(0, false);
+    if (open_check.code != ErrorCode::Success) {
+        std::cout << "Error: " << open_check.message << std::endl;
+        return -1;
+    }
 
     InternetAddress address{};
 
@@ -82,7 +98,11 @@ int Echoz::RunClient(const char *host, unsigned short port) {
         }
 
         std::cout << "Sending..." << std::endl;
-        udp_socket.Send(address, buffer, sizeof(buffer));
+        Error send = udp_socket.Send(address, buffer, sizeof(buffer));
+        if (send.code != ErrorCode::Success) {
+            std::cout << "Error: " << send.message << std::endl;
+            return -1;
+        }
 
         Error receive_check = udp_socket.Check();
         if (receive_check.code != ErrorCode::Success) {
@@ -92,11 +112,15 @@ int Echoz::RunClient(const char *host, unsigned short port) {
 
         InternetAddress sender{};
         int bytes_read = udp_socket.Receive(&sender, reinterpret_cast<char *>(&buffer), sizeof(buffer));
-        if (bytes_read != 0) {
+        if (bytes_read > 0) {
             std::cout << "Received " << bytes_read << " bytes from "
                       << HostToStr(sender.GetHost()) << ":"
                       << sender.GetPort() << ": "
                       << buffer << std::endl;
+        } else if (bytes_read < 0) {
+            std::cout << "Error: failed to receive data from socket" << std::endl;
+        } else {
+            std::cout << "Nothing received" << std::endl;
         }
     }
 
