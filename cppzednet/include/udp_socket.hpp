@@ -6,32 +6,36 @@
 
 #include "internet_address.hpp"
 
-class UDPSocket {
-public:
-    UDPSocket() = default;
-    ~UDPSocket() = default;
+namespace cppzednet {
+    class UDPSocket {
+    public:
+        UDPSocket() = default;
 
-    int GetSockfd() { return sockfd_; };
-    void SetSockfd(int sockfd) { sockfd_ = sockfd; };
+        ~UDPSocket() = default;
 
-    // Opens a UDP socket and binds it to a specified port
-    // (use 0 to select a random open port)
-    // Socket will not block if 'is_non_blocking' is true
-    Error Open(unsigned int port, bool is_non_blocking);
+        int GetSockfd() { return sockfd_; };
 
-    // Closes a previously opened socket
-    Error Close();
+        void SetSockfd(int sockfd) { sockfd_ = sockfd; };
 
-    // Sends a specific amount of data to 'destination'
-    Error Send(InternetAddress destination, const char *data, int size);
+        // Opens a UDP socket and binds it to a specified port
+        // (use 0 to select a random open port)
+        // Socket will not block if 'is_non_blocking' is true
+        Error Open(unsigned int port, bool is_non_blocking);
 
-    // Receives a specific amount of data from 'sender'
-    // Returns the number of bytes received, -1 otherwise
-    int Receive(InternetAddress *sender, char *data, int size);
+        // Closes a previously opened socket
+        Error Close();
 
-    // Check socket is available or not
-    Error Check();
+        // Sends a specific amount of data to 'destination'
+        Error Send(InternetAddress destination, const char *data, int size);
 
-private:
-    int sockfd_ = 0;
-};
+        // Receives a specific amount of data from 'sender'
+        // Returns the number of bytes received, -1 otherwise
+        int Receive(InternetAddress *sender, char *data, int size);
+
+        // Check socket is available or not
+        Error Check();
+
+    private:
+        int sockfd_ = 0;
+    };
+}

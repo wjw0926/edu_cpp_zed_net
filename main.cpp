@@ -11,8 +11,8 @@ int main(int argc, char* argv[]) {
     std::string option = argv[1];
 
     if (argc == 3 && option == "-server") {
-        return Echoz::RunServer(static_cast<unsigned short>(std::stoul(argv[2])));
+        return cppzednet::Echoz::RunServer(static_cast<unsigned short>(std::stoul(argv[2])));
     } else if (argc == 4 && option == "-client") {
-        return Echoz::RunClient(argv[2], static_cast<unsigned short>(std::stoul(argv[3])));
+        return cppzednet::Echoz::RunClient(argv[2], static_cast<unsigned short>(std::stoul(argv[3])));
     }
 }

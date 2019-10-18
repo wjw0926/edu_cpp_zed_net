@@ -8,38 +8,43 @@
 #include <arpa/inet.h>
 #include "error.hpp"
 
-class InternetAddress {
-public:
-    InternetAddress() = default;
-    ~InternetAddress() = default;
+namespace cppzednet {
+    class InternetAddress {
+    public:
+        InternetAddress() = default;
 
-    unsigned int GetHost() { return host_; };
-    unsigned short GetPort() { return port_; };
+        ~InternetAddress() = default;
 
-    void SetHost(unsigned int host) { host_ = host; };
-    void SetPort(unsigned short port) { port_ = port; };
+        unsigned int GetHost() { return host_; };
 
-    Error SetHost(const char *host) {
-        if (host == nullptr) {
-            SetHost(INADDR_ANY);
-        } else {
-            SetHost(inet_addr(host));
+        unsigned short GetPort() { return port_; };
 
-            if (GetHost() == INADDR_NONE) {
-                struct hostent *hostent = gethostbyname(host);
+        void SetHost(unsigned int host) { host_ = host; };
 
-                if (hostent) {
-                    SetHost(hostent->h_addr);
-                } else {
-                    return Error{ErrorCode::InvalidHost, "Invalid host name"};
+        void SetPort(unsigned short port) { port_ = port; };
+
+        Error SetHost(const char *host) {
+            if (host == nullptr) {
+                SetHost(INADDR_ANY);
+            } else {
+                SetHost(inet_addr(host));
+
+                if (GetHost() == INADDR_NONE) {
+                    struct hostent *hostent = gethostbyname(host);
+
+                    if (hostent) {
+                        SetHost(hostent->h_addr);
+                    } else {
+                        return Error{ErrorCode::InvalidHost, "Invalid host name"};
+                    }
                 }
             }
-        }
 
-        return Error{ErrorCode::Success, "Success"};
+            return Error{ErrorCode::Success, "Success"};
+        };
+
+    private:
+        unsigned int host_ = 0;
+        unsigned short port_ = 0;
     };
-
-private:
-    unsigned int host_ = 0;
-    unsigned short port_ = 0;
-};
+}
